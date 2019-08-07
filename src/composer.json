@@ -1,0 +1,22 @@
+{
+    "name": "travierm/maverick",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Travier Moorlag",
+            "email": "moorlagt@gmail.com"
+        }
+    ],
+    "require": {
+        "doctrine/dbal": "^2.9"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Travierm\\Maverick\\MaverickServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    }
+}
