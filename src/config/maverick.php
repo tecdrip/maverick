@@ -9,6 +9,8 @@ return [
     */ 
     'models' => [
 
-    ]
+    ],
+
+    'column_relationships' => []
 ];
 ?>

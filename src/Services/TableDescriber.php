@@ -3,20 +3,28 @@ namespace Travierm\Maverick\Services;
 
 use DB;
 
-class ColumnType {
-    public $name;
-    public $length;
-    public $raw;
-}
-
 class TableDescriber {
     public $columns = [];
 
     function __construct($tableName)
     {
+        $columnRelationships = config('maverick.column_relationships');
+
+
         $this->columns = DB::select("describe $tableName");
 
         foreach($this->columns as &$column) {
+            $model = @$columnRelationships[$column->Field];
+            if(@$model) {
+                $model = resolve($model);
+
+                $canUse = in_array('name', $model->getFillable());
+                if($canUse) {
+                    $column->Model = $model;
+                }
+            }
+
+            $column->FieldDisplayName = ucwords(str_replace("_", " ", $column->Field));
             $column->Type = $this->formatType($column->Type);
         }
     }
@@ -32,12 +40,11 @@ class TableDescriber {
             return false;
         }
 
-        $columnType = new ColumnType();
-        $columnType->raw = $type[0];
-        $columnType->name = $type[1];
-        $columnType->length = $type[2];
-
-        return $columnType;
+        return [
+            'name' => $type[1],
+            'raw' => $type[0],
+            'length' => $type[2]
+        ];
     }
 }
 ?>

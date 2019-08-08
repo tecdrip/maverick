@@ -32,14 +32,50 @@ class FormController extends Controller
 
     public function list($modelName) 
     {
-        $modelName = ucfirst($modelName);
+        $model = resolve('App\\' . ucfirst($modelName));
 
-        $model = resolve('App\\' . $modelName);
+        
 
+        $modelAll = $model::all();
+        $fillable = $modelAll[0]->getFillable();
+        
+        return view('maverick::list', compact('modelName', 'modelAll', 'fillable'));
+    }
+
+    public function create($modelName)
+    {
+        $badColumns = [
+            'id'
+        ];
+
+        $model = resolve('App\\' . ucfirst($modelName));
         $describer = new TableDescriber($model->getTable());
 
-        dd($describer);
+        $columns = $describer->columns;
 
-        return "Hello, $modelName";
+        return view('maverick::create', [
+            'modelName' => $modelName,
+            'columns' => collect($columns)
+        ]);
+    }
+
+    public function postCreate()
+    {
+        
+    }
+
+    private function formatHeaderArray($headers) 
+    {
+        foreach($headers as &$header) {
+            $header = str_replace("_", " ", $header);
+            
+            if($header == "id") {
+                $header = "ID";
+            }else{
+                $header = ucwords($header);
+            }
+        }
+
+        return $headers;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Travierm\Maverick;
 
-use travierm\Maverick;
+use Travierm\Maverick;
 use Illuminate\Support\ServiceProvider;
 
 class MaverickServiceProvider extends ServiceProvider
@@ -22,9 +22,11 @@ class MaverickServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(\Illuminate\Routing\Router $router)
     {
+        
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+        $this->loadViewsFrom(__DIR__.'/views', 'maverick');
         $this->publishes([
             __DIR__.'/config/maverick.php' => config_path('maverick.php'),
         ]);
