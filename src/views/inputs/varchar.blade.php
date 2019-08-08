@@ -6,8 +6,12 @@
             @include('maverick::inputs.common.states')
         </select>
     @else
-        <input class="form-control" type="number" name="{{ $column->Field }}" @if(@$column->Type['length']) maxlength='{{ $column->Type['length'] }}' @endif />
+        <input class="form-control @error($column->Field) is-invalid @enderror" type="text" name="{{ $column->Field }}" @if(@$column->Type['length']) maxlength='{{ $column->Type['length'] }}' @endif />
     @endif
+
+    <div class="invalid-feedback">
+        Please provide a valid {{ ucwords($column->Field) }}.
+    </div>
 
     {{ @$column->Model->table }}
     

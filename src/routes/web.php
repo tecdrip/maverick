@@ -5,7 +5,7 @@ Route::get('maverick', function(){
 });
 
 
-Route::middleware([])->group(function() {
+Route::middleware(['web'])->group(function() {
     foreach(config('maverick.models') as $modelName)
     {
         $modelName = strtolower($modelName);

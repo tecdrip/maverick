@@ -4,6 +4,7 @@ namespace Travierm\Maverick\Http\Controllers;
 
 use DB;
 use Schema;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Travierm\Maverick\Services\TableDescriber;
 
@@ -33,25 +34,24 @@ class FormController extends Controller
     public function list($modelName) 
     {
         $model = resolve('App\\' . ucfirst($modelName));
-
-        
-
         $modelAll = $model::all();
-        $fillable = $modelAll[0]->getFillable();
+
+        $fillable = [];
+        if(count($modelAll) >= 1) {
+            $fillable = $modelAll[0]->getFillable();
+        }
         
         return view('maverick::list', compact('modelName', 'modelAll', 'fillable'));
     }
 
     public function create($modelName)
     {
-        $badColumns = [
-            'id'
-        ];
 
         $model = resolve('App\\' . ucfirst($modelName));
         $describer = new TableDescriber($model->getTable());
 
         $columns = $describer->columns;
+    
 
         return view('maverick::create', [
             'modelName' => $modelName,
@@ -59,9 +59,33 @@ class FormController extends Controller
         ]);
     }
 
-    public function postCreate()
+    public function postCreate(Request $request, $modelName)
     {
-        
+        $model = resolve('App\\' . ucfirst($modelName));
+        $inputValues = $request->except(['_token']);   
+        $describer = new TableDescriber($model->getTable());
+
+        $columns = $describer->columns;
+
+        $validateConditions = [];
+        foreach($columns as $column) {
+            $validateConditions[$column->Field] = 'required';
+        }
+
+        $request->validate($validateConditions);
+
+        $instance = new $model;
+        foreach($inputValues as $key => $value) {
+            $instance->{$key} = $value;
+        }
+
+        $saved = $instance->save();
+
+        if($saved) {
+            session()->flash('success', "Created new " . ucwords($model) . "successfully");
+        }
+
+        return redirect($modelName . "/list");
     }
 
     private function formatHeaderArray($headers) 
