@@ -30,7 +30,10 @@ class FormController extends Controller
      */
     public function __construct()
     {
-        $route = Route::current()->uri;
+        $route = @Route::current()->uri;
+        if(@!$route) {
+            return;
+        }
         $this->modelName = explode("/", $route)[0];
         $this->model = resolve('App\\' . ucfirst($this->modelName));
         $this->describer = new TableDescriber($this->model->getTable());
@@ -58,7 +61,7 @@ class FormController extends Controller
         return view('maverick::create', [
             'action' => 'create',
             'modelName' => $this->modelName,
-            'columns' => collect($columns)
+            'columns' => $this->describer->index
         ]);
     }
 
@@ -112,7 +115,7 @@ class FormController extends Controller
             'id' => $id,
             'action' => 'update',
             'modelName' => $this->modelName,
-            'columns' => collect($columns)
+            'columns' => $columns,
         ]);
     }
 

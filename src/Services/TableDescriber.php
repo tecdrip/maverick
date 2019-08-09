@@ -4,12 +4,12 @@ namespace Travierm\Maverick\Services;
 use DB;
 
 class TableDescriber {
+    public $index = [];
     public $columns = [];
 
     function __construct($tableName)
     {
         $columnRelationships = config('maverick.column_relationships');
-
 
         $this->columns = DB::select("describe $tableName");
 
@@ -28,7 +28,78 @@ class TableDescriber {
             $column->Type = $this->formatType($column->Type);
         }
 
+        $orderSchemas = config('maverick.column_ordering');
+        $schema = @$orderSchemas[$tableName];
+
         $this->removeBadColumns();
+        $this->createIndex($schema);
+    }
+
+    private function getColumnByName($name)
+    {
+        foreach($this->columns as $column) {
+            if($column->Field == $name) {
+                return $column;
+            }
+        }
+
+        return false;
+    }
+
+    private function createIndex($schema = [])
+    {   
+        $index = [];
+        $indexedColumnNames = [];
+        $columns = $this->columns;
+
+        if(!$schema) {
+            $schema = [];
+        }
+
+        foreach($schema as $order) {
+            if(is_array($order)) {
+                $chunk = [];
+                foreach($order as $columnName) {
+                    $column = $this->getColumnByName($columnName);
+                    if($column) {
+                        $chunk[] = $column;
+                        $indexedColumnNames[] = $columnName;
+                    }
+                }
+
+                if($chunk) {
+                    $index[] = $chunk;
+                }
+            }else{
+                $column = $this->getColumnByName($order);
+                if($column) {
+                    $index[] = $column;
+                    $indexedColumnNames[] = $columnName;
+                }
+            }
+        }
+
+        $chunk = [];
+        //add non ordered columns
+        foreach($this->columns as $column) {
+            
+            if(!in_array($column->Field, $indexedColumnNames)) {
+                //column has not been added to the ind
+                $chunk[] = $column;
+            }
+
+            if(count($chunk) >= 2) {
+                $index[] = $chunk;
+                $chunk = [];
+            }
+        }
+
+        //purge chunk
+        if($chunk) {
+            $index[] = $chunk;
+        }
+
+        $this->index = $index;
     }
 
     private function removeBadColumns()

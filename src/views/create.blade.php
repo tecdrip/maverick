@@ -43,14 +43,23 @@
                         
                         <div class="container">
                             
-                            @foreach($columns->chunk(2) as $pair)
-                                <div class="row">
-                                    @foreach($pair as $column)
-                                    <div class="col-lg-6">
-                                        @includeIf('maverick::inputs.' . $column->Type['name'], [$column])
+                            @foreach($columns as $index)
+                                @if(is_array($index))
+                                    <div class="row">
+                                        @foreach($index as $column)
+                                        <div class="col-lg-6">
+                                            @includeIf('maverick::inputs.' . $column->Type['name'], [$column])
+                                        </div>
+                                        @endforeach
                                     </div>
-                                    @endforeach
+                                @else
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        @includeIf('maverick::inputs.' . $index->Type['name'], ['column' => $index])
+                                    </div>
                                 </div>
+                                @endif
+                                
                             @endforeach
                         </div>
 
