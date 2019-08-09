@@ -10,9 +10,9 @@
                 {{ Breadcrumbs::render('dealer/list') }}
 
                 <div class="card-body">
-                    @if (session('status'))
+                    @if (session('success'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {{ session('success') }}
                         </div>
                     @endif
 
@@ -23,6 +23,8 @@
                            @foreach($fillable as $header)
                             <th>{{ $header }}</th>
                            @endforeach
+                           <th>Update</th>
+                           <th>Delete</th>
                         </tr>
 
                         @foreach($modelAll as $model)
@@ -30,6 +32,8 @@
                             @foreach($model->getFillable() as $header)
                             <td>{{ $model->{$header} }}</td>
                             @endforeach
+                            <td><a class="btn btn-primary" href="/{{ $modelName }}/update/{{ $model->id }}">Update</a></td>
+                            <td><a onclick="return confirm('Are you sure?')" class="btn btn-danger" href="/{{ $modelName }}/delete/{{ $model->id }}">Delete</a></td>
                         </tr>
                         @endforeach
                     </table>

@@ -5,7 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Create {{ ucfirst($modelName) }}</div>
+                <div class="card-header">
+                    @if(@$columns->first()->Value)
+                        Update
+                    @else
+                        Create
+                    @endif
+                     {{ ucfirst($modelName) }}</div>
 
                 {{ Breadcrumbs::render('dealer/create') }}
                 
@@ -44,7 +50,7 @@
                         </div>
 
 
-                        <button class="btn btn-success">Create</button>
+                        <button class="btn btn-success"> @if(@$columns->first()->Value) Update @else Create @endif</button>
                     </form>
                 </div>
             </div>

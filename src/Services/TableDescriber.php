@@ -54,7 +54,6 @@ class TableDescriber {
 
     private function formatType($rawType)
     {
-        
         $rawType = explode(" ", $rawType)[0];
 
         preg_match('/([a-zA-Z\s]*)\((.*)\)$/', $rawType , $type);
