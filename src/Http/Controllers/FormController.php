@@ -137,7 +137,12 @@ class FormController extends Controller
             }
         }
 
-        $saved = $instance->save();
+        try {
+            $saved = $instance->save();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+
 
         if($saved) {
             session()->flash('success', 'Updated ' . ucfirst($this->modelName));

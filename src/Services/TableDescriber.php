@@ -10,6 +10,7 @@ class TableDescriber {
     function __construct($tableName)
     {
         $columnRelationships = config('maverick.column_relationships');
+        $columOverrides = config('maverick.column_override');
 
         $this->columns = DB::select("describe $tableName");
 
@@ -26,6 +27,16 @@ class TableDescriber {
 
             $column->FieldDisplayName = ucwords(str_replace("_", " ", $column->Field));
             $column->Type = $this->formatType($column->Type);
+
+            //column override
+            if($columOverrides[$tableName]); {
+                if(@$columOverrides[$tableName][$column->Field]) {
+                    $column->Type['name'] = $columOverrides[$tableName][$column->Field]['type'];
+                    if($columOverrides[$tableName][$column->Field]['type']) {
+                        $column->Options = $columOverrides[$tableName][$column->Field]['options'];
+                    }
+                }
+            }
         }
 
         $orderSchemas = config('maverick.column_ordering');
@@ -74,7 +85,7 @@ class TableDescriber {
                 $column = $this->getColumnByName($order);
                 if($column) {
                     $index[] = $column;
-                    $indexedColumnNames[] = $columnName;
+                    $indexedColumnNames[] = $order;
                 }
             }
         }
