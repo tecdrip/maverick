@@ -5,6 +5,7 @@ namespace Travierm\Maverick\Http\Controllers;
 use DB;
 use Hash;
 use Schema;
+use Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Travierm\Maverick\Services\TableDescriber;
@@ -29,42 +30,43 @@ class FormController extends Controller
      */
     public function __construct()
     {
-    
+        $route = Route::current()->uri;
+        $this->modelName = explode("/", $route)[0];
+        $this->model = resolve('App\\' . ucfirst($this->modelName));
+        $this->describer = new TableDescriber($this->model->getTable());
     }
 
-    public function list($modelName) 
+    public function list() 
     {
-        $model = resolve('App\\' . ucfirst($modelName));
-        $modelAll = $model::all();
+        $this->modelAll = $this->model::all();
 
         $fillable = [];
-        if(count($modelAll) >= 1) {
-            $fillable = $modelAll[0]->getFillable();
+        if(count($this->modelAll) >= 1) {
+            $fillable = $this->modelAll[0]->getFillable();
         }
+
+        $modelName = $this->modelName;
+        $modelAll = $this->modelAll;
         
         return view('maverick::list', compact('modelName', 'modelAll', 'fillable'));
     }
 
-    public function create($modelName)
+    public function create()
     {
-
-        $model = resolve('App\\' . ucfirst($modelName));
-        $describer = new TableDescriber($model->getTable());
-        $columns = $describer->columns;    
+        $columns = $this->describer->columns;    
 
         return view('maverick::create', [
-            'modelName' => $modelName,
+            'action' => 'create',
+            'modelName' => $this->modelName,
             'columns' => collect($columns)
         ]);
     }
 
-    public function postCreate(Request $request, $modelName)
+    public function postCreate(Request $request)
     {
-        $model = resolve('App\\' . ucfirst($modelName));
         $inputValues = $request->except(['_token']);   
-        $describer = new TableDescriber($model->getTable());
 
-        $columns = $describer->columns;
+        $columns = $this->describer->columns;
 
         $validateConditions = [];
         foreach($columns as $column) {
@@ -73,7 +75,7 @@ class FormController extends Controller
 
         $request->validate($validateConditions);
 
-        $instance = new $model;
+        $instance = new $this->model;
         foreach($inputValues as $key => $value) {
             if($key == 'password') {
                 $value = Hash::make($value);
@@ -85,23 +87,21 @@ class FormController extends Controller
         $saved = $instance->save();
 
         if($saved) {
-            session()->flash('success', "Created new " . ucwords($model) . "successfully");
+            session()->flash('success', "Created new " . ucwords($this->model) . "successfully");
         }
 
-        return redirect($modelName . "/list");
+        return redirect($this->modelName . "/list");
     }
 
-    public function update(Request $request, $modelName, $id)
+    public function update(Request $request, $id)
     {
-        $model = resolve('App\\' . ucfirst($modelName));
-        $describer = new TableDescriber($model->getTable());
-        $columns = $describer->columns; 
+        $columns = $this->describer->columns; 
 
-        $instance = $model->find($id);
+        $instance = $this->model->find($id);
 
         if(!$instance) {
-            session()->flask('error', "Could not find " . ucfirst($modelName) . " with ID given");
-            return redirect($modelName . "/list");
+            session()->flask('error', "Could not find " . ucfirst($this->modelName) . " with ID given");
+            return redirect($this->modelName . "/list");
         }
 
         foreach($columns as &$column) {
@@ -109,18 +109,18 @@ class FormController extends Controller
         }
 
         return view('maverick::create', [
-            'modelName' => $modelName,
+            'id' => $id,
+            'action' => 'update',
+            'modelName' => $this->modelName,
             'columns' => collect($columns)
         ]);
     }
 
-    public function postUpdate(Request $request, $modelName, $id)
+    public function postUpdate(Request $request, $id)
     {
-        $model = resolve('App\\' . ucfirst($modelName));
-        $describer = new TableDescriber($model->getTable());
-        $columns = $describer->columns;
+        $columns = $this->describer->columns;
 
-        $instance = $model->find($id);
+        $instance = $this->model->find($id);
 
         foreach($columns as &$column) {
             $columnName = $column->Field;
@@ -137,23 +137,22 @@ class FormController extends Controller
         $saved = $instance->save();
 
         if($saved) {
-            session()->flash('success', 'Updated ' . ucfirst($modelName));
+            session()->flash('success', 'Updated ' . ucfirst($this->modelName));
         }else{
-            session()->flash('error', 'Failed to Update ' . ucfirst($modelName));
+            session()->flash('error', 'Failed to Update ' . ucfirst($this->modelName));
         }
 
-        return redirect($modelName . "/list");
+        return redirect($this->modelName . "/list");
     }
 
-    public function delete(Request $request, $modelName, $id)
+    public function delete(Request $request, $id)
     {
-        $model = resolve('App\\' . ucfirst($modelName));
-        $instance = $model::find($id);
+        $instance = $this->model::find($id);
         $instance->delete();
 
-        session()->flash('error', 'Deleted ' . ucfirst($modelName));
+        session()->flash('error', 'Deleted ' . ucfirst($this->modelName));
 
-        return redirect($modelName . "/list");
+        return redirect($this->modelName . "/list");
     }
 
     private function formatHeaderArray($headers) 

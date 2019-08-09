@@ -7,12 +7,18 @@
             <div class="card">
                 <div class="card-header">{{ ucfirst($modelName) }}</div>
 
-                {{ Breadcrumbs::render('dealer/list') }}
+                 {{ Breadcrumbs::render("$modelName/list") }}
 
                 <div class="card-body">
                     @if (session('success'))
                         <div class="alert alert-success" role="alert">
                             {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if (session('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('error') }}
                         </div>
                     @endif
 

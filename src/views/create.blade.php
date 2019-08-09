@@ -6,14 +6,19 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    @if(@$columns->first()->Value)
+                    @if(@$action == "update")
                         Update
                     @else
                         Create
                     @endif
                      {{ ucfirst($modelName) }}</div>
-
-                {{ Breadcrumbs::render('dealer/create') }}
+                
+                    @if(@$action == "update")
+                         {{ Breadcrumbs::render("$modelName/update", $id) }}
+                    @else
+                         {{ Breadcrumbs::render("$modelName/create") }}
+                    @endif
+               
                 
                 <div class="card-body">
                     
@@ -49,8 +54,7 @@
                             @endforeach
                         </div>
 
-
-                        <button class="btn btn-success"> @if(@$columns->first()->Value) Update @else Create @endif</button>
+                        <button class="btn btn-success"> @if(@$action == "update") Update @else Create @endif</button>
                     </form>
                 </div>
             </div>
