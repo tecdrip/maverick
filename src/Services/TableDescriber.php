@@ -28,7 +28,7 @@ class TableDescriber {
             $column->FieldDisplayName = ucwords(str_replace("_", " ", $column->Field));
             $column->Type = $this->formatType($column->Type);
 
-            //column override
+            //column override lol
             if(@$columOverrides[$tableName]); {
                 if(@$columOverrides[$tableName][$column->Field]) {
                     $column->Type['name'] = $columOverrides[$tableName][$column->Field]['type'];
