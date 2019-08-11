@@ -4,7 +4,13 @@ Route::get('maverick', function(){
     return 'Maverick has been installed successfully!';
 });
 
+
 Route::middleware(['web'])->group(function() {
+
+    if(!config('maverick.models')) {
+        return;
+    }
+
     foreach(config('maverick.models') as $modelName)
     {
         $modelName = strtolower($modelName);
