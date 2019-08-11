@@ -1,6 +1,8 @@
 {
     "name": "travierm/maverick",
+    "description": "Automatic form generation based off Models",
     "type": "library",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Travier Moorlag",

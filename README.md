@@ -12,14 +12,12 @@ composer.json
 ```json
 "autoload": {
     "psr-4": {
-        // ADD ME
         "Travierm\\Maverick\\": "vendor/travierm/maverick/src/"
     },
     "classmap": [
         "database/seeds",
         "database/factories"
     ],
-    // ADD ME
     "repositories": [
         {
             "url": "https://github.com/travierm/maverick.git",
