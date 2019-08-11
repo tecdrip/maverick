@@ -3,11 +3,6 @@ A Laravel Package for Automatic Form Generation and more
 
 # Installing Guide
 
-```bash
-composer require travierm/maverick
-```
-
-
 composer.json
 ```json
 "autoload": {
@@ -27,6 +22,14 @@ composer.json
 ,
 ```
 
+### Require Maverick
+```bash
+composer require travierm/maverick
+composer update
+```
+
+
+### Publish the config file for Maverick
 ```bash
 php artisan vendor:publish
 ```
