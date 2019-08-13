@@ -23,7 +23,8 @@
                     @endif
 
                     <a href="/{{ $modelName }}/create" class="btn btn-success mb-4 float-right">Create {{ $modelName }}</a>
-
+                    
+                    @if(count($modelAll) >= 1)
                     <table class="table table-bordered">
                         <tr>
                            @foreach($fillable as $header)
@@ -43,6 +44,12 @@
                         </tr>
                         @endforeach
                     </table>
+                    @else
+                        <div class="alert alert-primary" role="alert">
+                            {{ ucfirst($modelName) }} table is empty
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <?php
 
 Route::get('maverick', function(){
-    return 'Maverick 1.0.5 has been installed successfully!';
+    return 'Maverick 1.0.6 has been installed successfully!';
 });
 
 
