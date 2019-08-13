@@ -1,10 +1,14 @@
 <?php
 
 Route::get('maverick', function(){
-    return 'Maverick 1.0.4 has been installed successfully!';
+    return 'Maverick 1.0.5 has been installed successfully!';
 });
 
-$middleware = array_merge(config('maverick.middleware'), ['web']);
+
+$middleware = ['web'];
+if(is_array(@config('maverick.middleware'))) {
+    $middleware = array_merge($middleware, config('maverick.middleware'));
+}
 
 Route::middleware($middleware)->group(function() {
 
