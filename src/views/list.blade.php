@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(config('maverick.master_view'))
 
 @section('content')
 <div class="container-fluid">
