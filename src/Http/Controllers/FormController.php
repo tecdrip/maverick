@@ -1,6 +1,6 @@
 <?php
 
-namespace Travierm\Maverick\Http\Controllers;
+namespace Tecdrip\Maverick\Http\Controllers;
 
 use DB;
 use Hash;
@@ -8,7 +8,7 @@ use Schema;
 use Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Travierm\Maverick\Services\TableDescriber;
+use Tecdrip\Maverick\Services\TableDescriber;
 
 class FormController extends Controller
 {

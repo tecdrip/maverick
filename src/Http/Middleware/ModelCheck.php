@@ -1,6 +1,6 @@
 <?php
 
-namespace Travierm\Http\Middleware;
+namespace Tecdrip\Http\Middleware;
 
 use Closure;
 

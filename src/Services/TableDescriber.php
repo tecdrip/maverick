@@ -1,5 +1,5 @@
 <?php
-namespace Travierm\Maverick\Services;
+namespace Tecdrip\Maverick\Services;
 
 use DB;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Travierm\Maverick;
+namespace Tecdrip\Maverick;
 
-use Travierm\Maverick;
+use Tecdrip\Maverick;
 use Illuminate\Support\ServiceProvider;
 
 class MaverickServiceProvider extends ServiceProvider

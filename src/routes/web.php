@@ -15,13 +15,13 @@ Route::middleware(['web'])->group(function() {
     {
         $modelName = strtolower($modelName);
 
-        Route::get("$modelName/list", 'Travierm\Maverick\Http\Controllers\FormController@list')->name($modelName . '/list');
-        Route::get("$modelName/create", 'Travierm\Maverick\Http\Controllers\FormController@create')->name($modelName . '/create');
-        Route::get("$modelName/update/{id}", 'Travierm\Maverick\Http\Controllers\FormController@update')->name($modelName . '/update');
-        Route::get("$modelName/delete/{id}", 'Travierm\Maverick\Http\Controllers\FormController@delete')->name($modelName . '/delete');
+        Route::get("$modelName/list", 'Tecdrip\Maverick\Http\Controllers\FormController@list')->name($modelName . '/list');
+        Route::get("$modelName/create", 'Tecdrip\Maverick\Http\Controllers\FormController@create')->name($modelName . '/create');
+        Route::get("$modelName/update/{id}", 'Tecdrip\Maverick\Http\Controllers\FormController@update')->name($modelName . '/update');
+        Route::get("$modelName/delete/{id}", 'Tecdrip\Maverick\Http\Controllers\FormController@delete')->name($modelName . '/delete');
 
-        Route::post("$modelName/create", 'Travierm\Maverick\Http\Controllers\FormController@postCreate');
-        Route::post("$modelName/update/{id}", 'Travierm\Maverick\Http\Controllers\FormController@postUpdate');
+        Route::post("$modelName/create", 'Tecdrip\Maverick\Http\Controllers\FormController@postCreate');
+        Route::post("$modelName/update/{id}", 'Tecdrip\Maverick\Http\Controllers\FormController@postUpdate');
 
         if($modelName ) {
             //Register Breadcrumbs

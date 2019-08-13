@@ -1,5 +1,5 @@
 {
-    "name": "travierm/maverick",
+    "name": "tecdrip/maverick",
     "description": "Automatic form generation based off Models",
     "type": "library",
     "version": "1.0.1",
@@ -16,7 +16,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Travierm\\Maverick\\MaverickServiceProvider"
+                "Tecdrip\\Maverick\\MaverickServiceProvider"
             ],
             "aliases": {
             }

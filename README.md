@@ -7,7 +7,7 @@ Add to composer.json
 ```json
 "autoload": {
     "psr-4": {
-        "Travierm\\Maverick\\": "vendor/travierm/maverick/src/"
+        "Tecdrip\\Maverick\\": "vendor/Tecdrip/maverick/src/"
     },
  }
 ,
@@ -16,7 +16,7 @@ Add to composer.json
 ```json
 "repositories": [
     {
-        "url": "https://github.com/travierm/maverick.git",
+        "url": "https://github.com/Tecdrip/maverick.git",
         "type": "git"
     }
 ]
@@ -24,11 +24,11 @@ Add to composer.json
 
 ### Require Maverick
 ```bash
-composer require travierm/maverick
+composer require Tecdrip/maverick
 ```
 
 
 ### Publish the config file for Maverick
 ```bash
-php artisan vendor:publish --provider Travierm\Maverick\MaverickServiceProvider
+php artisan vendor:publish --provider Tecdrip\Maverick\MaverickServiceProvider
 ```
