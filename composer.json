@@ -21,5 +21,12 @@
             "aliases": {
             }
         }
+    },
+    "autoload": {
+        "classmap": [
+        ],
+        "psr-4": {
+            "Tecdrip\\Maverick\\MaverickServiceProvider": "src/MaverickServiceProvider.php"
+        }
     }
 }
