@@ -1,11 +1,12 @@
 <?php
 
 Route::get('maverick', function(){
-    return 'Maverick has been installed successfully!';
+    return 'Maverick 1.0.4 has been installed successfully!';
 });
 
+$middleware = array_merge(config('maverick.middleware'), ['web']);
 
-Route::middleware(['web'])->group(function() {
+Route::middleware($middleware)->group(function() {
 
     if(!config('maverick.models')) {
         return;
