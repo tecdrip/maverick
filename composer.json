@@ -1,8 +1,8 @@
 {
     "name": "tecdrip/maverick",
     "description": "Automatic form generation based off Models",
-    "type": "library",
-    "version": "1.0.2",
+    "type": "package",
+    "version": "1.0.3",
     "authors": [
         {
             "name": "Travier Moorlag",
@@ -13,16 +13,16 @@
         "doctrine/dbal": "^2.9",
         "davejamesmiller/laravel-breadcrumbs": "^5.2"
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "tecdrip\\maverick\\MaverickServiceProvider"
-            ]
-        }
-    },
     "autoload": {
         "psr-4": {
             "Tecdrip\\Maverick\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tecdrip\\Maverick\\MaverickServiceProvider"
+            ]
         }
     }
 }

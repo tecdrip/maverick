@@ -1,6 +1,6 @@
 <?php
 
-namespace tecdrip\maverick;
+namespace Tecdrip\Maverick;
 
 use Illuminate\Support\ServiceProvider;
 
