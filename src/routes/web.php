@@ -1,9 +1,8 @@
 <?php
 
 Route::get('maverick', function(){
-    return 'Maverick 1.0.6 has been installed successfully!';
+    return 'Maverick 1.0.7 has been installed successfully!';
 });
-
 
 $middleware = ['web'];
 if(is_array(@config('maverick.middleware'))) {
