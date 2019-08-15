@@ -2,7 +2,7 @@
     "name": "tecdrip/maverick",
     "description": "Automatic form generation based off Models",
     "type": "package",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "authors": [
         {
             "name": "Travier Moorlag",

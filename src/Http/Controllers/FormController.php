@@ -61,7 +61,7 @@ class FormController extends Controller
         $modelName = $this->modelName;
         $modelAll = $this->modelAll;
         
-        return view('maverick::list', compact('modelName', 'modelAll', 'fillable'));
+        return view('maverick::list', compact('modelName', 'modelAll', 'headers'));
     }
 
     public function create()
