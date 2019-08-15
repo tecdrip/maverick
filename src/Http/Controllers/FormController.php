@@ -90,7 +90,7 @@ class FormController extends Controller
         $saved = $instance->save();
 
         if($saved) {
-            session()->flash('success', "Created new " . ucwords($this->model) . "successfully");
+            session()->flash('success', "New " . ucwords($this->modelName) . " created");
         }
 
         return redirect($this->modelName . "/list");
@@ -103,7 +103,7 @@ class FormController extends Controller
         $instance = $this->model->find($id);
 
         if(!$instance) {
-            session()->flask('error', "Could not find " . ucfirst($this->modelName) . " with ID given");
+            session()->flash('error', "Could not find " . ucfirst($this->modelName) . " with ID given");
             return redirect($this->modelName . "/list");
         }
 
