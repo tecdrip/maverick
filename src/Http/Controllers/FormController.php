@@ -43,9 +43,19 @@ class FormController extends Controller
     {
         $this->modelAll = $this->model::all();
 
-        $fillable = [];
+        $headers = [];
         if(count($this->modelAll) >= 1) {
-            $fillable = $this->modelAll[0]->getFillable();
+            $headers = $this->modelAll[0]->getFillable();
+
+            $headers = array_map(function($header) {
+                if($header == "id") {
+                    $header = "ID";
+                }else{
+                    $header = ucwords($header);
+                }
+
+                return $header;
+            }, $headers);
         }
 
         $modelName = $this->modelName;

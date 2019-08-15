@@ -26,7 +26,7 @@
                     <a href="/{{ $modelName }}/create" class="btn btn-success mb-4 float-right">Create {{ $modelName }}</a>
                     <table class="table table-bordered">
                         <tr>
-                           @foreach($fillable as $header)
+                           @foreach($headers as $header)
                             <th>{{ $header }}</th>
                            @endforeach
                            <th>Update</th>
