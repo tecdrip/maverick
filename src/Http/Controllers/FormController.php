@@ -132,8 +132,11 @@ class FormController extends Controller
     public function postUpdate(Request $request, $id)
     {
         $columns = $this->describer->columns;
-
         $instance = $this->model->find($id);
+
+        if($request->password) {
+            $request->password = Hash::make($request->password);
+        }
 
         foreach($columns as &$column) {
             $columnName = $column->Field;
