@@ -27,9 +27,9 @@ return [
      *  Maverick.column_relationships
      * 
      *  Define relationship ID's used in Models
-     *  These ID's to improve the create/update forms
+     *  These ID's are used to improve the create/update forms
      *  
-     *  Models defined here should have an ID and Name field in their table.
+     *  Model Classes used here should have an ID and Name column in their table.
      */
     'column_relationships' => [
         // 'user_id' => App\User::class
@@ -50,7 +50,7 @@ return [
     /**
      * Maverick.column_override
      * 
-     * Mostly use to turn strings fields into enums
+     * Mostly used to turn string fields into enums
      */
     'column_override' => [
         /*
