@@ -6,7 +6,7 @@
             @include('maverick::inputs.common.states')
         </select>
     @else
-        <input class="form-control @error($column->Field) is-invalid @enderror" @if(@$column->Value) value="{{ $column->Value }}" @endif type="text" name="{{ $column->Field }}" @if(@$column->Type['length']) maxlength='{{ $column->Type['length'] }}' @endif />
+        <input class="form-control @error($column->Field) is-invalid @enderror" @if(@$column->Value) value="{{ $column->Value }}" @endif type="search" name="{{ $column->Field }}" @if(@$column->Type['length']) maxlength='{{ $column->Type['length'] }}' @endif />
     @endif
 
     <div class="invalid-feedback">

@@ -1,0 +1,2 @@
+When updating a model. Select options are not defaulting to current value
+When viewing a list of models. Fields with underscores don't format properly like the create view does
