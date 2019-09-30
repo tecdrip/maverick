@@ -24,7 +24,7 @@
     
                     @if(count($modelAll) >= 1)
                     <a href="/{{ $modelName }}/create" class="btn btn-success mb-4 float-right">Create {{ $modelName }}</a>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-responsive">
                         <tr>
                            @foreach($headers as $header)
                             <th>{{ $header }}</th>
