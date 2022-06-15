@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "doctrine/dbal": "^2.9",
+        "doctrine/dbal": "^3.3",
         "davejamesmiller/laravel-breadcrumbs": "^5.2"
     },
     "autoload": {
