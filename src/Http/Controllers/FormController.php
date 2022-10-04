@@ -41,16 +41,22 @@ class FormController extends Controller
 
     public function list() 
     {
-        $this->modelAll = $this->model::all();
+        $modelFillables = $this->model->getFillable();
+        $hasNameColumn = in_array('name', $modelFillables);
+
+        $this->modelAll = $hasNameColumn ?
+            $this->model::orderBy('name', 'asc')->get()
+            :
+            $this->model::all();
 
         $headers = [];
-        if(count($this->modelAll) >= 1) {
-            $headers = $this->modelAll[0]->getFillable();
+        if (count($this->modelAll) >= 1) {
+            $headers = $modelFillables;
 
-            $headers = array_map(function($header) {
-                if($header == "id") {
+            $headers = array_map(function ($header) {
+                if ($header == "id") {
                     $header = "ID";
-                }else{
+                } else {
                     $header = ucwords($header);
                 }
 
@@ -60,7 +66,7 @@ class FormController extends Controller
 
         $modelName = $this->modelName;
         $modelAll = $this->modelAll;
-        
+
         return view('maverick::list', compact('modelName', 'modelAll', 'headers'));
     }
 
